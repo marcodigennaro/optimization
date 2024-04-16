@@ -1,15 +1,14 @@
 [tool.poetry]
 name = "optimization"
 version = "0.1.0"
-description = "A slist of common optimisation problems"
-authors = ["marcodigennaro <m.di.gennaro@outlook.com>"]
-readme = "README.md"
+description = ""
+authors = ["Marco Di Gennaro <m.di.gennaro@outlook.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-requests = "^2.31.0"
 
+[tool.poetry.dev-dependencies]
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
