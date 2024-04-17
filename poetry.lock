@@ -1527,6 +1527,14 @@ doc = ["sphinx", "sphinx-rtd-theme"]
 test = ["pytest", "isort", "flake8"]
 
 [[package]]
+name = "toml"
+version = "0.10.2"
+description = "Python Library for Tom's Obvious, Minimal Language"
+category = "main"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -1664,7 +1672,7 @@ test = ["websockets"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "553efa82ecfb8ee5e4f52b7d7e3d161a07865c1dd42848cb1593ad253d749ec2"
+content-hash = "20c56a6ee74d7166347069b9af3bc6dc49dc25ff7a99ffae82e56539c7d0f02b"
 
 [metadata.files]
 anyio = []
@@ -1780,6 +1788,7 @@ stack-data = []
 tenacity = []
 terminado = []
 tinycss2 = []
+toml = []
 tomli = []
 tornado = []
 tqdm = []
