@@ -1,0 +1,11 @@
+Requirement already satisfied: numpy in /home/marco/Desktop/ATOM/optim/optimization/.venv/lib/python3.10/site-packages (1.26.4)
+Collecting pandas
+  Downloading pandas-2.2.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.0/13.0 MB 5.0 MB/s eta 0:00:00
+Requirement already satisfied: scipy in /home/marco/Desktop/ATOM/optim/optimization/.venv/lib/python3.10/site-packages (1.13.0)
+Requirement already satisfied: tzdata>=2022.7 in /home/marco/Desktop/ATOM/optim/optimization/.venv/lib/python3.10/site-packages (from pandas) (2024.1)
+Requirement already satisfied: pytz>=2020.1 in /home/marco/Desktop/ATOM/optim/optimization/.venv/lib/python3.10/site-packages (from pandas) (2024.1)
+Requirement already satisfied: python-dateutil>=2.8.2 in /home/marco/Desktop/ATOM/optim/optimization/.venv/lib/python3.10/site-packages (from pandas) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in /home/marco/Desktop/ATOM/optim/optimization/.venv/lib/python3.10/site-packages (from python-dateutil>=2.8.2->pandas) (1.16.0)
+Installing collected packages: pandas
+Successfully installed pandas-2.2.2

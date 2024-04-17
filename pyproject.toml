@@ -6,8 +6,16 @@ authors = ["Marco Di Gennaro <m.di.gennaro@outlook.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+jupyterlab = "^4.1.6"
+numpy = "^1.26.4"
+scipy = "^1.13.0"
+pandas = "^2.2.2"
+jupyterlab-execute-time = "^3.1.2"
+docplex = "^2.27.239"
+cplex = "^22.1.1"
 
 [tool.poetry.dev-dependencies]
+pytest = "^5.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
