@@ -1,12 +1,13 @@
 # optimization
 
-This repo provides an optimisation example
+This repo provides a set of tutorials demonstrating different optimization problems and computational techniques to solve them.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Anaconda 3.6
+- Python "^3.10"
+- Poetry 
 
 ### Getting started
 
@@ -15,30 +16,24 @@ This repo provides an optimisation example
 cd /your/local/folder
 
 # Clone the WindML repository
-git clone https://github.com/marcodigennaro/optimization  
+git clone git@github.com:marcodigennaro/optimization.git
 
 # Enter the folder
 cd optimization/
 
-# Create the Conda environment from the environment.yaml file
-conda env create -f environment.yaml 
+# Create the python environment from the pyproject.toml file
+poetry install
 
-# Activate the Conda environment
-conda activate optimization
-
-# Install this package
-pip install . 
+# Activate the python environment
+source .venv/bin/activate
 
 # Start Jupyter Lab
 jupyter-lab  
 ```
 
-Run any of the jupyter notebooks to visualize data and perform ML algorithms.
-Data should be downloaded beforehand. 
-
 ### Content of the Jupyter Notebooks
 
-  1. Column names analysis
+  1. 
 
 
 
