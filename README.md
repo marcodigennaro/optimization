@@ -22,6 +22,9 @@ poetry install
 # Activate the python environment
 source .venv/bin/activate
 
+# Run tests 
+poetry run pytest -v
+
 # Start Jupyter Lab
 jupyter-lab  
 ```

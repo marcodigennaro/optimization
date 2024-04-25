@@ -10,7 +10,8 @@ def time_measure(func):
         func (function): The function to be wrapped by the decorator.
 
     Returns:
-        function: A wrapped function that, when called, adds the execution time to its returned dictionary.
+        function: A wrapped function that, when called, adds the execution time to
+        its returned dictionary.
     """
 
     def wrapper(*args, **kwargs):
@@ -33,13 +34,15 @@ def time_measure(func):
 
 def performance_measure(func):
     """
-    Decorator that measures memory usage of the function execution and adds it to the returned dictionary.
+    Decorator that measures memory usage of the function execution and adds it
+    to the returned dictionary.
 
     Args:
         func (function): The function to be wrapped by the decorator.
 
     Returns:
-        function: A wrapped function that, when called, adds the memory usage statistics (current and peak) to its result dictionary.
+        function: A wrapped function that, when called, adds the memory usage
+        statistics (current and peak) to its result dictionary.
     """
 
     def wrapper(*args, **kwargs):
@@ -71,7 +74,8 @@ def print_output(func):
         func (function): The function to be wrapped by the decorator.
 
     Returns:
-        function: A wrapped function that, when called, prints specific details from its returned dictionary and then returns the dictionary unchanged.
+        function: A wrapped function that, when called, prints specific details
+        from its returned dictionary and then returns the dictionary unchanged.
     """
 
     def wrapper(*args, **kwargs):
@@ -79,9 +83,7 @@ def print_output(func):
         result = func(*args, **kwargs)
 
         # Print formatted output based on the function's result
-        print(f"We need {result['A']} buses A")
-        print(f"We need {result['B']} buses B")
-        print(f"We need {result['C']} buses C")
+        print(f"(A, B, C) = {result['A'], result['B'], result['C']}")
         print(f"Minimum total cost: {result['minimum_total_cost']}€")
 
         return result
