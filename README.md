@@ -31,7 +31,9 @@ jupyter-lab
 
 ### Content of the Jupyter Notebooks
 
-  1. 
+  1. bus_allocation.ipynb presents a simple linear optimization problem and two main, non-trivial solutions. 
+One is an educated guess coming from a common-sense hypothesis, the second one involve a simple linear optimization.
+Both are compared to the real solution in terms of precision, memory and time required.
 
 
 

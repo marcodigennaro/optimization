@@ -23,7 +23,7 @@ def time_measure(func):
 
         # Stop timing and calculate elapsed time
         end_time = time.time()
-        elapsed_time = end_time - start_time
+        elapsed_time = 1e3 * (end_time - start_time)
 
         # Add execution time to the result dictionary
         result['elapsed_time'] = elapsed_time
