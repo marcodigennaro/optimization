@@ -1,5 +1,5 @@
 import math
-from optimization.core.wrappers import performance_measure, print_output
+from optimization.core.wrappers import performance_measure, time_measure, print_output
 import pulp
 
 
@@ -36,30 +36,32 @@ class BusAllocation:
         """
         return (num_bus_a * self.cost_a) + (num_bus_b * self.cost_b) + (num_bus_c * self.cost_c)
 
-    @print_output
+    @time_measure
     @performance_measure
+    @print_output
     def trivial_solution(self, bus='A'):
-        print(bus)
         num_bus_a: int = 0
         num_bus_b: int = 0
         num_bus_c: int = 0
         if bus == 'A':
-            num_bus_a = math.ceil( self.n_students / self.seat_a )
+            num_bus_a = math.ceil(self.n_students / self.seat_a)
         elif bus == 'B':
-            num_bus_b = math.ceil( self.n_students / self.seat_b )
+            num_bus_b = math.ceil(self.n_students / self.seat_b)
         elif bus == 'C':
-            num_bus_c = math.ceil( self.n_students / self.seat_c )
+            num_bus_c = math.ceil(self.n_students / self.seat_c)
+
         total_cost = self.calc_total_cost(num_bus_a, num_bus_b, num_bus_c)
 
         result_dict = {
-            'num_buses_A': num_bus_a,
-            'num_buses_B': num_bus_b,
-            'num_buses_C': num_bus_c,
+            'A': num_bus_a,
+            'B': num_bus_b,
+            'C': num_bus_c,
             'minimum_total_cost': total_cost
         }
 
         return result_dict
 
+    @time_measure
     @performance_measure
     @print_output
     def educated_guess(self):
@@ -78,14 +80,15 @@ class BusAllocation:
         total_cost = self.calc_total_cost(num_bus_a, num_bus_b, num_bus_c)
 
         result_dict = {
-            'num_buses_A': num_bus_a,
-            'num_buses_B': num_bus_b,
-            'num_buses_C': num_bus_c,
+            'A': num_bus_a,
+            'B': num_bus_b,
+            'C': num_bus_c,
             'minimum_total_cost': total_cost
         }
 
         return result_dict
 
+    @time_measure
     @performance_measure
     @print_output
     def linear_programming(self):
@@ -106,14 +109,15 @@ class BusAllocation:
         prob.solve(pulp.PULP_CBC_CMD(msg=False))
 
         result_dict = {
-            'num_buses_A': int(x.value()),
-            'num_buses_B': int(y.value()),
-            'num_buses_C': int(z.value()),
+            'A': int(x.value()),
+            'B': int(y.value()),
+            'C': int(z.value()),
             'minimum_total_cost': pulp.value(prob.objective)
         }
 
         return result_dict
 
+    @time_measure
     @performance_measure
     @print_output
     def iterative_solution(self, verbose=False):
@@ -156,9 +160,9 @@ class BusAllocation:
                             print(f"    Price = {total_cost} EUR, discarding solution")
 
         result_dict = {
-            'num_buses_A': best_combination[0],
-            'num_buses_B': best_combination[1],
-            'num_buses_C': best_combination[2],
+            'A': best_combination[0],
+            'B': best_combination[1],
+            'C': best_combination[2],
             'minimum_total_cost': best_combination[3]
         }
 

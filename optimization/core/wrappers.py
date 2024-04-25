@@ -1,46 +1,89 @@
 import time
-from memory_profiler import memory_usage
+import tracemalloc
 
-def performance_measure(func):
+
+def time_measure(func):
+    """
+    Decorator that measures the execution time of a function.
+
+    Args:
+        func (function): The function to be wrapped by the decorator.
+
+    Returns:
+        function: A wrapped function that, when called, adds the execution time to its returned dictionary.
+    """
+
     def wrapper(*args, **kwargs):
-        # Measure memory just before function execution
-        mem_start = memory_usage(max_usage=True)
+        # Start timing
         start_time = time.time()
 
-        # Execute the function and store the result
-        func_result = func(*args, **kwargs)
+        # Execute the function
+        result = func(*args, **kwargs)
 
+        # Stop timing and calculate elapsed time
         end_time = time.time()
-        # Measure memory immediately after function execution
-        mem_end = memory_usage(max_usage=True)
+        elapsed_time = end_time - start_time
 
-        execution_time = end_time - start_time
-        mem_usage = mem_end - mem_start  # Calculate the difference in memory usage
+        # Add execution time to the result dictionary
+        result['elapsed_time'] = elapsed_time
+        return result
 
-        # Extend the result with performance data if it's a dictionary
-        print('func_result')
-        print(func_result)
-        func_result.update({
-                'execution_time': execution_time,
-                'memory_usage': mem_usage
-        })
+    return wrapper
 
-        return func_result
+
+def performance_measure(func):
+    """
+    Decorator that measures memory usage of the function execution and adds it to the returned dictionary.
+
+    Args:
+        func (function): The function to be wrapped by the decorator.
+
+    Returns:
+        function: A wrapped function that, when called, adds the memory usage statistics (current and peak) to its result dictionary.
+    """
+
+    def wrapper(*args, **kwargs):
+        # Start memory tracking
+        tracemalloc.start()
+
+        # Execute the function
+        result = func(*args, **kwargs)
+
+        # Get memory usage statistics
+        current, peak = tracemalloc.get_traced_memory()
+
+        # Stop memory tracking
+        tracemalloc.stop()
+
+        # Add memory usage to the result dictionary
+        result['current'] = current
+        result['peak'] = peak
+        return result
 
     return wrapper
 
 
 def print_output(func):
-    def wrapper(*args, **kwargs):
-        # Execute the function and store the result
-        out_dict = func(*args, **kwargs)
-        print('out inisde print-out')
-        print(out_dict)
-        print(f"We need {out_dict['num_buses_A']} buses A")
-        print(f"We need {out_dict['num_buses_B']} buses B")
-        print(f"We need {out_dict['num_buses_C']} buses C")
-        print(f"Minimum total cost: {out_dict['minimum_total_cost']}€")
+    """
+    Decorator that prints formatted output from the result of a function.
 
-        return out_dict
+    Args:
+        func (function): The function to be wrapped by the decorator.
+
+    Returns:
+        function: A wrapped function that, when called, prints specific details from its returned dictionary and then returns the dictionary unchanged.
+    """
+
+    def wrapper(*args, **kwargs):
+        # Execute the function and capture the result
+        result = func(*args, **kwargs)
+
+        # Print formatted output based on the function's result
+        print(f"We need {result['A']} buses A")
+        print(f"We need {result['B']} buses B")
+        print(f"We need {result['C']} buses C")
+        print(f"Minimum total cost: {result['minimum_total_cost']}€")
+
+        return result
 
     return wrapper
