@@ -195,6 +195,18 @@ optional = false
 python-versions = ">=3.7.0"
 
 [[package]]
+name = "clarabel"
+version = "0.7.1"
+description = "Clarabel Conic Interior Point Solver for Rust / Python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+numpy = "*"
+scipy = "*"
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -259,6 +271,50 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "cvxopt"
+version = "1.3.2"
+description = "Convex optimization package"
+category = "main"
+optional = false
+python-versions = ">=3, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[[package]]
+name = "cvxpy"
+version = "1.4.3"
+description = "A domain-specific language for modeling convex optimization problems in Python."
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+clarabel = ">=0.5.0"
+ecos = ">=2"
+numpy = ">=1.15"
+osqp = ">=0.6.2"
+pybind11 = "*"
+scipy = ">=1.1.0"
+scs = ">=3.0"
+
+[package.extras]
+cbc = ["cylp (>=0.91.5)"]
+clarabel = ["clarabel"]
+cvxopt = ["cvxopt"]
+diffcp = ["diffcp"]
+glop = ["ortools (>=9.5,<9.8)"]
+glpk = ["cvxopt"]
+glpk-mi = ["cvxopt"]
+gurobi = ["gurobipy"]
+highs = ["scipy (>=1.6.1)"]
+mosek = ["mosek"]
+pdlp = ["ortools (>=9.5,<9.8)"]
+piqp = ["piqp"]
+proxqp = ["proxsuite"]
+scip = ["pyscipopt"]
+scipy = ["scipy"]
+scs = ["setuptools (>65.5.1)"]
+xpress = ["xpress"]
+
+[[package]]
 name = "cycler"
 version = "0.12.1"
 description = "Composable style cycles"
@@ -319,6 +375,18 @@ python-versions = "*"
 
 [package.dependencies]
 six = "*"
+
+[[package]]
+name = "ecos"
+version = "2.0.13"
+description = "This is the Python package for ECOS: Embedded Cone Solver. See Github page for more information."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+numpy = ">=1.6"
+scipy = ">=0.9"
 
 [[package]]
 name = "exceptiongroup"
@@ -504,6 +572,14 @@ test = ["pytest (<8)", "pytest-asyncio (<0.22)", "testpath", "pickleshare"]
 test-extra = ["ipython", "curio", "matplotlib (!=3.2.0)", "nbformat", "numpy (>=1.23)", "pandas", "trio"]
 
 [[package]]
+name = "ipython-genutils"
+version = "0.2.0"
+description = "Vestigial utilities from IPython"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "isoduration"
 version = "20.11.0"
 description = "Operations with ISO 8601 durations"
@@ -617,6 +693,46 @@ docs = ["ipykernel", "myst-parser", "pydata-sphinx-theme", "sphinx-autodoc-typeh
 test = ["coverage", "ipykernel (>=6.14)", "mypy", "paramiko", "pre-commit", "pytest", "pytest-cov", "pytest-jupyter[client] (>=0.4.1)", "pytest-timeout"]
 
 [[package]]
+name = "jupyter-contrib-core"
+version = "0.4.2"
+description = "Common utilities for jupyter-contrib projects."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+jupyter_core = "*"
+notebook = ">=4.0"
+tornado = "*"
+traitlets = "*"
+
+[package.extras]
+testing_utils = ["nose", "mock"]
+
+[[package]]
+name = "jupyter-contrib-nbextensions"
+version = "0.7.0"
+description = "A collection of Jupyter nbextensions."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+ipython_genutils = "*"
+jupyter_contrib_core = ">=0.3.3"
+jupyter_core = "*"
+jupyter_highlight_selected_word = ">=0.1.1"
+jupyter_nbextensions_configurator = ">=0.4.0"
+lxml = "*"
+nbconvert = ">=6.0"
+notebook = ">=6.0"
+tornado = "*"
+traitlets = ">=4.1"
+
+[package.extras]
+test = ["nbformat", "nose", "pip", "requests", "mock"]
+
+[[package]]
 name = "jupyter-core"
 version = "5.7.2"
 description = "Jupyter core package. A base package on which Jupyter projects rely."
@@ -656,6 +772,14 @@ docs = ["jupyterlite-sphinx", "myst-parser", "pydata-sphinx-theme", "sphinxcontr
 test = ["click", "pre-commit", "pytest-asyncio (>=0.19.0)", "pytest-console-scripts", "pytest (>=7.0)", "rich"]
 
 [[package]]
+name = "jupyter-highlight-selected-word"
+version = "0.2.0"
+description = "Jupyter notebook extension that enables highlighting every instance of the current word in the notebook."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "jupyter-lsp"
 version = "2.2.5"
 description = "Multi-Language Server WebSocket proxy for Jupyter Notebook/Lab server"
@@ -665,6 +789,25 @@ python-versions = ">=3.8"
 
 [package.dependencies]
 jupyter-server = ">=1.1.2"
+
+[[package]]
+name = "jupyter-nbextensions-configurator"
+version = "0.6.3"
+description = "jupyter serverextension providing configuration interfaces for nbextensions."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+jupyter-contrib-core = ">=0.3.3"
+jupyter-core = "*"
+notebook = ">=6.0"
+pyyaml = "*"
+tornado = "*"
+traitlets = "*"
+
+[package.extras]
+test = ["jupyter-contrib-core", "nose", "requests", "selenium", "mock"]
 
 [[package]]
 name = "jupyter-server"
@@ -803,6 +946,21 @@ optional = false
 python-versions = ">=3.9"
 
 [[package]]
+name = "lxml"
+version = "5.2.1"
+description = "Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+cssselect = ["cssselect (>=0.7)"]
+html5 = ["html5lib"]
+html-clean = ["lxml-html-clean"]
+htmlsoup = ["beautifulsoup4"]
+source = ["Cython (>=3.0.10)"]
+
+[[package]]
 name = "markupsafe"
 version = "2.1.5"
 description = "Safely add untrusted strings to HTML/XML markup."
@@ -839,6 +997,17 @@ python-versions = ">=3.8"
 
 [package.dependencies]
 traitlets = "*"
+
+[[package]]
+name = "memory-profiler"
+version = "0.61.0"
+description = "A module for monitoring memory usage of a python program"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+psutil = "*"
 
 [[package]]
 name = "mistune"
@@ -951,6 +1120,26 @@ extra = ["lxml (>=4.6)", "pygraphviz (>=1.12)", "pydot (>=2.0)", "sympy (>=1.10)
 test = ["pytest (>=7.2)", "pytest-cov (>=4.0)"]
 
 [[package]]
+name = "notebook"
+version = "7.1.3"
+description = "Jupyter Notebook - A web-based notebook environment for interactive computing"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+jupyter-server = ">=2.4.0,<3"
+jupyterlab = ">=4.1.1,<4.2"
+jupyterlab-server = ">=2.22.1,<3"
+notebook-shim = ">=0.2,<0.3"
+tornado = ">=6.2.0"
+
+[package.extras]
+dev = ["hatch", "pre-commit"]
+docs = ["myst-parser", "nbsphinx", "pydata-sphinx-theme", "sphinx (>=1.3.6)", "sphinxcontrib-github-alt", "sphinxcontrib-spelling"]
+test = ["importlib-resources (>=5.0)", "ipykernel", "jupyter-server[test] (>=2.4.0,<3)", "jupyterlab-server[test] (>=2.22.1,<3)", "nbval", "pytest-console-scripts", "pytest-timeout", "pytest-tornasync", "pytest (>=7.0)", "requests"]
+
+[[package]]
 name = "notebook-shim"
 version = "0.2.4"
 description = "A shim layer for notebook traits and config"
@@ -994,6 +1183,19 @@ python-versions = ">=3.7"
 
 [package.extras]
 dev = ["pytest", "black", "mypy"]
+
+[[package]]
+name = "osqp"
+version = "0.6.4"
+description = "OSQP: The Operator Splitting QP Solver"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+numpy = ">=1.7"
+qdldl = "*"
+scipy = ">=0.13.2"
 
 [[package]]
 name = "overrides"
@@ -1205,6 +1407,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "pulp"
+version = "2.8.0"
+description = "PuLP is an LP modeler written in python. PuLP can generate MPS or LP files and call GLPK, COIN CLP/CBC, CPLEX, and GUROBI to solve linear problems."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
 name = "pure-eval"
 version = "0.2.2"
 description = "Safely evaluate AST nodes without side effects"
@@ -1222,6 +1432,17 @@ description = "library with cross-python path, ini-parsing, io, code, log facili
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[[package]]
+name = "pybind11"
+version = "2.12.0"
+description = "Seamless operability between C++11 and Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+global = ["pybind11-global (==2.12.0)"]
 
 [[package]]
 name = "pycparser"
@@ -1339,6 +1560,18 @@ python-versions = ">=3.7"
 cffi = {version = "*", markers = "implementation_name == \"pypy\""}
 
 [[package]]
+name = "qdldl"
+version = "0.1.7.post2"
+description = "QDLDL, a free LDL factorization routine."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+numpy = ">=1.7"
+scipy = ">=0.13.2"
+
+[[package]]
 name = "referencing"
 version = "0.34.0"
 description = "JSON Referencing + Python"
@@ -1410,6 +1643,18 @@ numpy = ">=1.22.4,<2.3"
 test = ["pytest", "pytest-cov", "pytest-timeout", "pytest-xdist", "asv", "mpmath", "gmpy2", "threadpoolctl", "scikit-umfpack", "pooch", "hypothesis (>=6.30)", "array-api-strict"]
 doc = ["sphinx (>=5.0.0)", "pydata-sphinx-theme (>=0.15.2)", "sphinx-design (>=0.4.0)", "matplotlib (>=3.5)", "numpydoc", "jupytext", "myst-nb", "pooch", "jupyterlite-sphinx (>=0.12.0)", "jupyterlite-pyodide-kernel"]
 dev = ["mypy", "typing-extensions", "types-psutil", "pycodestyle", "ruff", "cython-lint (>=0.12.2)", "rich-click", "doit (>=0.36.0)", "pydevtool"]
+
+[[package]]
+name = "scs"
+version = "3.2.4.post1"
+description = "Splitting conic solver"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+numpy = "*"
+scipy = "*"
 
 [[package]]
 name = "seaborn"
@@ -1672,7 +1917,7 @@ test = ["websockets"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "20c56a6ee74d7166347069b9af3bc6dc49dc25ff7a99ffae82e56539c7d0f02b"
+content-hash = "04393f99becb4dbb6c7f7367aef0c23e6d83cd1f9721a3464877309e920725f3"
 
 [metadata.files]
 anyio = []
@@ -1690,17 +1935,21 @@ bleach = []
 certifi = []
 cffi = []
 charset-normalizer = []
+clarabel = []
 colorama = []
 colorcet = []
 comm = []
 contourpy = []
 cplex = []
+cvxopt = []
+cvxpy = []
 cycler = []
 debugpy = []
 decorator = []
 deepdiff = []
 defusedxml = []
 docplex = []
+ecos = []
 exceptiongroup = []
 executing = []
 fastjsonschema = []
@@ -1712,6 +1961,7 @@ httpx = []
 idna = []
 ipykernel = []
 ipython = []
+ipython-genutils = []
 isoduration = []
 jedi = []
 jinja2 = []
@@ -1720,9 +1970,13 @@ jsonpointer = []
 jsonschema = []
 jsonschema-specifications = []
 jupyter-client = []
+jupyter-contrib-core = []
+jupyter-contrib-nbextensions = []
 jupyter-core = []
 jupyter-events = []
+jupyter-highlight-selected-word = []
 jupyter-lsp = []
+jupyter-nbextensions-configurator = []
 jupyter-server = []
 jupyter-server-terminals = []
 jupyterlab = []
@@ -1731,9 +1985,11 @@ jupyterlab-pygments = []
 jupyterlab-server = []
 kiwisolver = []
 llvmlite = []
+lxml = []
 markupsafe = []
 matplotlib = []
 matplotlib-inline = []
+memory-profiler = []
 mistune = []
 more-itertools = []
 nbclient = []
@@ -1741,10 +1997,12 @@ nbconvert = []
 nbformat = []
 nest-asyncio = []
 networkx = []
+notebook = []
 notebook-shim = []
 numba = []
 numpy = []
 ordered-set = []
+osqp = []
 overrides = []
 packaging = []
 pandapower = []
@@ -1760,8 +2018,10 @@ prometheus-client = []
 prompt-toolkit = []
 psutil = []
 ptyprocess = []
+pulp = []
 pure-eval = []
 py = []
+pybind11 = []
 pycparser = []
 pygments = []
 pyparsing = []
@@ -1773,12 +2033,14 @@ pywin32 = []
 pywinpty = []
 pyyaml = []
 pyzmq = []
+qdldl = []
 referencing = []
 requests = []
 rfc3339-validator = []
 rfc3986-validator = []
 rpds-py = []
 scipy = []
+scs = []
 seaborn = []
 send2trash = []
 six = []

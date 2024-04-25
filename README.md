@@ -4,12 +4,7 @@ This repo provides a set of tutorials demonstrating different optimization probl
 
 ## Getting Started
 
-### Prerequisites
-
-- Python "^3.10"
-- Poetry 
-
-### Getting started
+### Get the package
 
 ```
 # Navigate to your local folder
