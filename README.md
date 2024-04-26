@@ -31,13 +31,13 @@ jupyter-lab
 
 ### Content of the Jupyter Notebooks
 
-  1. `bus_allocation.ipynb` presents a simple linear optimization problem and two main, non-trivial solutions. 
+1. `bus_allocation` presents a simple linear optimization problem and two main, non-trivial solutions. 
 One is an educated guess coming from a common-sense hypothesis, the second one involve a simple linear optimization.
 Both are compared to the real solution in terms of precision, memory and time required.
+2. `optimal_power_flow` Minimize the total generation cost of electrical power across several generating units while meeting fixed power demand and adhering to system stability constraints.
+3. `power_loss` Determine the optimal wire diameter so that the power losses due to resistance is minimised while ensuring that the cable can carry a specified maximum current without overheating
+4. `renewable_energy_flow` We need to optimize the distribution of energy from multiple sources to different consumers to minimize the overall cost, while satisfying demand constraints.
 
-  2. `power_loss.ipynb` given an electrical power cable, whose diameter can change of 5cm, 
-determine the optimal diameter such that the power losses due to the change in resistance is minimised, 
-while ensuring the maximum current to be below the overheating limit. This uses the CPLEX library for advanced optimization.
 
 ### Author
 
