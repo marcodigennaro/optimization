@@ -33,6 +33,7 @@ pytest = "^8.1.1"
 #notebook = "^7.1.3"
 ipython = "^8.23.0"
 tensorflow = "^2.16.1"
+pydantic = "^2.7.1"
 
 [tool.poetry.dev-dependencies]
 jupyter = "^1.0.0"

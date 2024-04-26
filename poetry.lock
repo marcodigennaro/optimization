@@ -7,6 +7,14 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "annotated-types"
+version = "0.6.0"
+description = "Reusable constraint types to use with typing.Annotated"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "anyio"
 version = "4.3.0"
 description = "High level compatibility layer for multiple asynchronous event loop implementations"
@@ -1510,6 +1518,33 @@ optional = false
 python-versions = ">=3.8"
 
 [[package]]
+name = "pydantic"
+version = "2.7.1"
+description = "Data validation using Python type hints"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+annotated-types = ">=0.4.0"
+pydantic-core = "2.18.2"
+typing-extensions = ">=4.6.1"
+
+[package.extras]
+email = ["email-validator (>=2.0.0)"]
+
+[[package]]
+name = "pydantic-core"
+version = "2.18.2"
+description = "Core functionality for Pydantic validation and serialization"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
+
+[[package]]
 name = "pygments"
 version = "2.17.2"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -2100,10 +2135,11 @@ python-versions = ">=3.6"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "395c8430b969dca4c29b1b4bddd86b7eddbd780c106c06972432927bad7228c4"
+content-hash = "45ef226f51c72398088f57d176ca47b7e400adf13d3da5fbbac27192720321ac"
 
 [metadata.files]
 absl-py = []
+annotated-types = []
 anyio = []
 appnope = []
 argon2-cffi = []
@@ -2212,6 +2248,8 @@ ptyprocess = []
 pulp = []
 pure-eval = []
 pycparser = []
+pydantic = []
+pydantic-core = []
 pygments = []
 pyparsing = []
 pytest = []
