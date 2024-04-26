@@ -246,6 +246,17 @@ test = ["contourpy", "matplotlib", "pillow"]
 test-no-images = ["pytest", "pytest-cov", "pytest-xdist", "wurlitzer"]
 
 [[package]]
+name = "coverage"
+version = "7.5.0"
+description = "Code coverage measurement for Python"
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+toml = ["tomli"]
+
+[[package]]
 name = "cplex"
 version = "22.1.1.2"
 description = "A Python interface to the CPLEX Callable Library, Community Edition."
@@ -2100,7 +2111,7 @@ python-versions = ">=3.6"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "395c8430b969dca4c29b1b4bddd86b7eddbd780c106c06972432927bad7228c4"
+content-hash = "a076b33e5501d9fb36e013314fc2d38fe3e7c4d8270076957d4ef4a1f5af4312"
 
 [metadata.files]
 absl-py = []
@@ -2122,6 +2133,7 @@ charset-normalizer = []
 colorama = []
 comm = []
 contourpy = []
+coverage = []
 cplex = []
 cycler = []
 debugpy = []

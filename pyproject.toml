@@ -36,3 +36,4 @@ tensorflow = "^2.16.1"
 
 [tool.poetry.dev-dependencies]
 jupyter = "^1.0.0"
+coverage = "^7.5.0"
