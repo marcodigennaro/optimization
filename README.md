@@ -31,11 +31,13 @@ jupyter-lab
 
 ### Content of the Jupyter Notebooks
 
-  1. bus_allocation.ipynb presents a simple linear optimization problem and two main, non-trivial solutions. 
+  1. `bus_allocation.ipynb` presents a simple linear optimization problem and two main, non-trivial solutions. 
 One is an educated guess coming from a common-sense hypothesis, the second one involve a simple linear optimization.
 Both are compared to the real solution in terms of precision, memory and time required.
 
-
+  2. `power_loss.ipynb` given an electrical power cable, whose diameter can change of 5cm, 
+determine the optimal diameter such that the power losses due to the change in resistance is minimised, 
+while ensuring the maximum current to be below the overheating limit. This uses the CPLEX library for advanced optimization.
 
 ### Author
 
