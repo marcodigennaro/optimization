@@ -206,6 +206,14 @@ python-versions = ">=3.8"
 pycparser = "*"
 
 [[package]]
+name = "cfgv"
+version = "3.4.0"
+description = "Validate configuration and produce human readable error messages."
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "charset-normalizer"
 version = "3.3.2"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
@@ -309,6 +317,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "distlib"
+version = "0.3.8"
+description = "Distribution utilities"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "docplex"
 version = "2.27.239"
 description = "The IBM Decision Optimization CPLEX Modeling for Python"
@@ -351,6 +367,19 @@ python-versions = "*"
 
 [package.extras]
 devel = ["colorama", "jsonschema", "json-spec", "pylint", "pytest", "pytest-benchmark", "pytest-cache", "validictory"]
+
+[[package]]
+name = "filelock"
+version = "3.14.0"
+description = "A platform independent file lock."
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+docs = ["furo (>=2023.9.10)", "sphinx-autodoc-typehints (>=1.25.2)", "sphinx (>=7.2.6)"]
+testing = ["covdefaults (>=2.3)", "coverage (>=7.3.2)", "diff-cover (>=8.0.1)", "pytest-cov (>=4.1)", "pytest-mock (>=3.12)", "pytest-timeout (>=2.2)", "pytest (>=7.4.3)"]
+typing = ["typing-extensions (>=4.8)"]
 
 [[package]]
 name = "flatbuffers"
@@ -477,6 +506,17 @@ brotli = ["brotli", "brotlicffi"]
 cli = ["click (>=8.0.0,<9.0.0)", "pygments (>=2.0.0,<3.0.0)", "rich (>=10,<14)"]
 http2 = ["h2 (>=3,<5)"]
 socks = ["socksio (>=1.0.0,<2.0.0)"]
+
+[[package]]
+name = "identify"
+version = "2.5.36"
+description = "File identification library for Python"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+license = ["ukkonen"]
 
 [[package]]
 name = "idna"
@@ -1233,6 +1273,14 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "nodeenv"
+version = "1.8.0"
+description = "Node.js virtual environment builder"
+category = "main"
+optional = false
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*"
+
+[[package]]
 name = "notebook"
 version = "7.1.3"
 description = "Jupyter Notebook - A web-based notebook environment for interactive computing"
@@ -1451,6 +1499,21 @@ python-versions = ">=3.8"
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
+
+[[package]]
+name = "pre-commit"
+version = "3.7.0"
+description = "A framework for managing and maintaining multi-language pre-commit hooks."
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+cfgv = ">=2.0.0"
+identify = ">=1.0.0"
+nodeenv = ">=0.11.1"
+pyyaml = ">=5.1"
+virtualenv = ">=20.10.0"
 
 [[package]]
 name = "prometheus-client"
@@ -2073,6 +2136,23 @@ socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
+name = "virtualenv"
+version = "20.26.1"
+description = "Virtual Python Environment builder"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+distlib = ">=0.3.7,<1"
+filelock = ">=3.12.2,<4"
+platformdirs = ">=3.9.1,<5"
+
+[package.extras]
+docs = ["furo (>=2023.7.26)", "proselint (>=0.13)", "sphinx (>=7.1.2,!=7.3)", "sphinx-argparse (>=0.4)", "sphinxcontrib-towncrier (>=0.2.1a0)", "towncrier (>=23.6)"]
+test = ["covdefaults (>=2.3)", "coverage-enable-subprocess (>=1)", "coverage (>=7.2.7)", "flaky (>=3.7)", "packaging (>=23.1)", "pytest-env (>=0.8.2)", "pytest-freezer (>=0.4.8)", "pytest-mock (>=3.11.1)", "pytest-randomly (>=3.12)", "pytest-timeout (>=2.1)", "pytest (>=7.4)", "setuptools (>=68)", "time-machine (>=2.10)"]
+
+[[package]]
 name = "wcwidth"
 version = "0.2.13"
 description = "Measures the displayed width of unicode strings in a terminal"
@@ -2146,7 +2226,7 @@ python-versions = ">=3.6"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "182f440db3dbf68a66e1a4f811b8e44b6d8e121575c720b4c8e89d5b9448439c"
+content-hash = "1d8e82cfb922058d468bbd3314efec2c4223517c0dadbebc185e22646f33057f"
 
 [metadata.files]
 absl-py = []
@@ -2165,6 +2245,7 @@ beautifulsoup4 = []
 bleach = []
 certifi = []
 cffi = []
+cfgv = []
 charset-normalizer = []
 colorama = []
 comm = []
@@ -2175,10 +2256,12 @@ cycler = []
 debugpy = []
 decorator = []
 defusedxml = []
+distlib = []
 docplex = []
 exceptiongroup = []
 executing = []
 fastjsonschema = []
+filelock = []
 flatbuffers = []
 fonttools = []
 fqdn = []
@@ -2189,6 +2272,7 @@ h11 = []
 h5py = []
 httpcore = []
 httpx = []
+identify = []
 idna = []
 iniconfig = []
 ipykernel = []
@@ -2237,6 +2321,7 @@ nbclient = []
 nbconvert = []
 nbformat = []
 nest-asyncio = []
+nodeenv = []
 notebook = []
 notebook-shim = []
 numpy = []
@@ -2252,6 +2337,7 @@ pillow = []
 platformdirs = []
 plotly = []
 pluggy = []
+pre-commit = []
 prometheus-client = []
 prompt-toolkit = []
 protobuf = []
@@ -2304,6 +2390,7 @@ typing-extensions = []
 tzdata = []
 uri-template = []
 urllib3 = []
+virtualenv = []
 wcwidth = []
 webcolors = []
 webencodings = []
