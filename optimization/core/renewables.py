@@ -1,3 +1,5 @@
+import warnings
+
 from scipy.optimize import minimize
 import numpy as np
 from pydantic import BaseModel
@@ -56,9 +58,12 @@ class EnergyDistribution:
 
     def __init__(self):
         """Initialize an EnergyDistribution object."""
+        self.n_consumers = None
+        self.n_sources = None
         self.sources = {}  # Dictionary to store energy sources
         self.consumers = {}  # Dictionary to store consumers
         self.flows = {}  # Dictionary to track energy flow from sources to consumers
+        
 
     def add_source(self, source):
         """
@@ -76,7 +81,8 @@ class EnergyDistribution:
         self.sources[source.name] = {'capacity': source.capacity,
                                      'cost_per_unit': source.cost_per_unit,
                                      'unit': source.unit}
-
+        self.n_sources = len(self.sources)
+        
     def add_consumer(self, consumer):
         """
         Add a consumer to the distribution system.
@@ -91,6 +97,7 @@ class EnergyDistribution:
             raise KeyError(f'The key {consumer.name} exists already')
 
         self.consumers[consumer.name] = {'demand': consumer.demand}
+        self.n_consumers = len(self.consumers)
 
     def cost_function(self, x):
         total_cost = 0
@@ -134,3 +141,10 @@ class EnergyDistribution:
 
         return res.fun, res.x
 
+    def calculate_cost(self, x_array):
+
+        assert x_array[0::2].sum() <= self.sources['Solar']['capacity']
+        if x_array[1::2].sum() > self.sources['Wind']['capacity']:
+            warnings.warn(f'{x_array[1::2].sum()} obtained on second column, and is too big')
+        return self.sources['Solar']['cost_per_unit'] * x_array[0::2].sum() + \
+            self.sources['Wind']['cost_per_unit'] * x_array[1::2].sum()
