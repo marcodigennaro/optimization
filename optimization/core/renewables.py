@@ -1,7 +1,4 @@
 import warnings
-
-from scipy.optimize import minimize
-import numpy as np
 from pydantic import BaseModel
 
 
@@ -63,7 +60,6 @@ class EnergyDistribution:
         self.sources = {}  # Dictionary to store energy sources
         self.consumers = {}  # Dictionary to store consumers
         self.flows = {}  # Dictionary to track energy flow from sources to consumers
-        
 
     def add_source(self, source):
         """
@@ -73,7 +69,7 @@ class EnergyDistribution:
             source (EnergySource): EnergySource object to be added.
 
         Raises:
-            KeyError: If the key (source name) already exists in the sources dictionary.
+            KeyError: If the key (source name) already exists in the sources' dictionary.
         """
         if source.name in self.sources.keys():
             raise KeyError(f'The key {source.name} exists already')
@@ -82,7 +78,7 @@ class EnergyDistribution:
                                      'cost_per_unit': source.cost_per_unit,
                                      'unit': source.unit}
         self.n_sources = len(self.sources)
-        
+
     def add_consumer(self, consumer):
         """
         Add a consumer to the distribution system.
@@ -91,22 +87,13 @@ class EnergyDistribution:
             consumer (Consumer): Consumer object to be added.
 
         Raises:
-            KeyError: If the key (consumer name) already exists in the consumers dictionary.
+            KeyError: If the key (consumer name) already exists in the consumers' dictionary.
         """
         if consumer.name in self.consumers.keys():
             raise KeyError(f'The key {consumer.name} exists already')
 
         self.consumers[consumer.name] = {'demand': consumer.demand}
         self.n_consumers = len(self.consumers)
-
-    def cost_function(self, x):
-        total_cost = 0
-        for source_name, source_data in self.sources.items():
-            for consumer_name, consumer_data in self.consumers.items():
-                cost_per_unit = source_data['cost_per_unit']
-                demand = consumer_data['demand']
-                total_cost += cost_per_unit * x[source_name][consumer_name]
-        return total_cost
 
     def demand_constraint(self, x):
         constraints = []
@@ -124,27 +111,55 @@ class EnergyDistribution:
             constraints.append(capacity - total_flow)
         return constraints
 
-    def optimize_flow(self):
-        # Initialize flows
-        x0 = {source_name: {consumer_name: 0 for consumer_name in self.consumers} for source_name in self.sources}
+    def check_solution_integrity(self, solution):
+        """Test that the proposed solution satisfies the problem requirements"""
 
-        # Define constraints
-        cons = [
-            {'type': 'eq', 'fun': lambda x: self.demand_constraint(x)},
-            {'type': 'ineq', 'fun': lambda x: self.capacity_constraint(x)}
-        ]
+        solar_demand, wind_demand, A_demand, B_demand = calculate_local_demand(solution)
 
-        # Minimize objective function
-        res = minimize(self.objective_function, x0, constraints=cons, options={'disp': True})
-        if not res.success:
-            raise ValueError("Optimization failed")
+        if A_demand != self.consumers['A']['demand']:
+            raise ValueError(f"A customer demand is not met ({A_demand}!={self.consumers['A']['demand']})")
+        if B_demand != self.consumers['B']['demand']:
+            raise ValueError(f"B customer demand is not met ({B_demand}!={self.consumers['B']['demand']})")
 
-        return res.fun, res.x
+        S_max = self.sources['Solar']['Capacity']
+        W_max = self.sources['Wind']['Capacity']
+        if solar_demand > S_max:
+            warnings.warn(
+                f'Total solar demand ({solar_demand}) is higher than capacity ({S_max}).')
+        if wind_demand > W_max:
+            warnings.warn(
+                f'Total wind demand ({wind_demand}) is higher than capacity ({W_max}).')
 
-    def calculate_cost(self, x_array):
+        return
 
-        assert x_array[0::2].sum() <= self.sources['Solar']['capacity']
-        if x_array[1::2].sum() > self.sources['Wind']['capacity']:
-            warnings.warn(f'{x_array[1::2].sum()} obtained on second column, and is too big')
-        return self.sources['Solar']['cost_per_unit'] * x_array[0::2].sum() + \
-            self.sources['Wind']['cost_per_unit'] * x_array[1::2].sum()
+    def cost_function(self, solution, test=False):
+
+        # Test input correctness
+        if test:
+            self.check_solution_integrity(solution)
+
+        solar_demand, wind_demand, A_demand, B_demand = calculate_local_demand(solution)
+
+        return self.sources['Solar']['cost_per_unit'] * solar_demand + \
+            self.sources['Wind']['cost_per_unit'] * wind_demand
+
+
+def calculate_local_demand(solution):
+    # Input is a vector
+    if solution.ndim == 1:
+        solar_demand = solution[0::2].sum()
+        wind_demand = solution[1::2].sum()
+        A_demand = solution[:2].sum()
+        B_demand = solution[2:].sum()
+
+        # Input is a matrix
+    elif solution.ndim == 2:
+        solar_demand = solution[:, 0].sum()
+        wind_demand = solution[:, 1].sum()
+        A_demand = solution[0, :].sum()
+        B_demand = solution[1, :].sum()
+
+    else:
+        raise ValueError(f"Incorrect input shape = {solution.shape}")
+
+    return solar_demand, wind_demand, A_demand, B_demand
