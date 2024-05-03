@@ -1,4 +1,3 @@
-import warnings
 import numpy as np
 from pydantic import BaseModel
 import math
@@ -131,13 +130,6 @@ class EnergyDistribution:
         """Test that the proposed solution satisfies the problem requirements"""
 
         solar_demand, wind_demand, A_demand, B_demand = calculate_local_demand(solution)
-
-        #if solar_demand > self.S_max:
-        #    warnings.warn(
-        #        f'Total solar demand ({solar_demand}) is higher than capacity ({S_max}).')
-        #if wind_demand > self.W_max:
-        #    warnings.warn(
-        #        f'Total wind demand ({wind_demand}) is higher than capacity ({W_max}).')
 
         if not math.isclose(A_demand, self.D_A):
             raise ValueError(f"Customer A's demand is not met ({A_demand}!={self.consumers['A']['demand']})")
