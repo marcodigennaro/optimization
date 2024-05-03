@@ -1,7 +1,7 @@
 import warnings
-
 import numpy as np
 from pydantic import BaseModel
+import math
 
 
 class ConsumerModel(BaseModel):
@@ -57,10 +57,20 @@ class EnergyDistribution:
 
     def __init__(self):
         """Initialize an EnergyDistribution object."""
+        self.D_B = None
+        self.D_A = None
+        self.W_max = None
+        self.S_max = None
         self.n_consumers = None
         self.n_sources = None
         self.sources = {}  # Dictionary to store energy sources
         self.consumers = {}  # Dictionary to store consumers
+
+    def read_max_values(self):
+        self.S_max = self.sources['Solar']['capacity']
+        self.W_max = self.sources['Wind']['capacity']
+        self.D_A = self.consumers['A']['demand']
+        self.D_B = self.consumers['B']['demand']
 
     def add_source(self, source):
         """
@@ -117,27 +127,28 @@ class EnergyDistribution:
             constraints.append(capacity - total_flow)
         return constraints
 
-    def check_solution_integrity(self, solution):
+    def check_solution_integrity(self, solution, tolerance=1e-9):
         """Test that the proposed solution satisfies the problem requirements"""
 
         solar_demand, wind_demand, A_demand, B_demand = calculate_local_demand(solution)
 
-        if A_demand != self.consumers['A']['demand']:
-            raise ValueError(f"A customer demand is not met ({A_demand}!={self.consumers['A']['demand']})")
-        if B_demand != self.consumers['B']['demand']:
-            raise ValueError(f"B customer demand is not met ({B_demand}!={self.consumers['B']['demand']})")
+        #if solar_demand > self.S_max:
+        #    warnings.warn(
+        #        f'Total solar demand ({solar_demand}) is higher than capacity ({S_max}).')
+        #if wind_demand > self.W_max:
+        #    warnings.warn(
+        #        f'Total wind demand ({wind_demand}) is higher than capacity ({W_max}).')
 
-        S_max = self.sources['Solar']['capacity']
-        W_max = self.sources['Wind']['capacity']
+        if not math.isclose(A_demand, self.D_A):
+            raise ValueError(f"Customer A's demand is not met ({A_demand}!={self.consumers['A']['demand']})")
+        if not math.isclose(B_demand, self.D_B):
+            raise ValueError(f"customer B's demand is not met ({B_demand}!={self.consumers['B']['demand']})")
+        if solar_demand - self.S_max > tolerance:
+            raise ValueError(f"Total Solar demand exceeds Solar capacity ({solar_demand}>{self.S_max}")
+        if wind_demand - self.W_max > tolerance:
+            raise ValueError(f"Total Wind demand exceeds Wind capacity ({wind_demand}>{self.W_max}")
 
-        if solar_demand > S_max:
-            warnings.warn(
-                f'Total solar demand ({solar_demand}) is higher than capacity ({S_max}).')
-        if wind_demand > W_max:
-            warnings.warn(
-                f'Total wind demand ({wind_demand}) is higher than capacity ({W_max}).')
-
-        return
+        return True
 
     def cost_function(self, solution, test=False):
 
@@ -150,31 +161,55 @@ class EnergyDistribution:
         return self.sources['Solar']['cost_per_unit'] * solar_demand + \
             self.sources['Wind']['cost_per_unit'] * wind_demand
 
-
     def generate_one_solution(self):
-        S_max = self.sources['Solar']['capacity']
-        W_max = self.sources['Wind']['capacity']
-        D_A = self.consumers['A']['demand']
-        D_B = self.consumers['B']['demand']
 
-        a = np.random.uniform(0, D_A)
-        b = D_A - a
+        a = np.random.uniform(0, self.D_A)
+        b = self.D_A - a
 
         # Possible range for c based on a + c < S_max
-        max_c = S_max - a
+        max_c = self.S_max - a
 
         # Random float for c such that a + c < S_max and c < max_c
-        c = np.random.uniform(0, min(max_c, S_max))
-        d = D_B - c
+        c = np.random.uniform(0, min(max_c, self.S_max))
+        d = self.D_B - c
 
         solution = np.array([[a, b], [c, d]])
 
-        # Check column 1 constraint (b + d < W_max)
-        if b + d < W_max:
-            return solution
-        else:
-            # Recursively call the function
+        # if any value is negative repeat
+        if (solution < 0).any():
             return self.generate_one_solution()
+
+        # Check integrity of solution, else repeat
+        try:
+            self.check_solution_integrity(solution)
+        except ValueError:
+            return self.generate_one_solution()
+
+        # Check column 1 constraint (b + d < W_max)
+        if b + d > self.W_max:
+            return self.generate_one_solution()
+
+        return solution
+
+    def generate_many_solutions(self, nsolutions=1000):
+
+        solutions = []
+        costs = []
+        solution_hashes = set()  # To store hashes of arrays for quick membership checks
+
+        for _ in range(nsolutions):
+            solution = self.generate_one_solution()
+            solution_tuple = tuple(map(tuple, solution))  # Convert array to a tuple of tuples
+
+            if solution_tuple not in solution_hashes:
+                cost = self.cost_function(solution)
+                costs.append(cost)
+                solutions.append(solution)
+                solution_hashes.add(solution_tuple)  # Store the hashable version
+            else:
+                print('Solution already present')
+
+        return solutions, costs
 
 
 def calculate_local_demand(solution):
