@@ -1,4 +1,6 @@
 import warnings
+
+import numpy as np
 from pydantic import BaseModel
 
 
@@ -59,7 +61,6 @@ class EnergyDistribution:
         self.n_sources = None
         self.sources = {}  # Dictionary to store energy sources
         self.consumers = {}  # Dictionary to store consumers
-        self.flows = {}  # Dictionary to track energy flow from sources to consumers
 
     def add_source(self, source):
         """
@@ -77,7 +78,10 @@ class EnergyDistribution:
         self.sources[source.name] = {'capacity': source.capacity,
                                      'cost_per_unit': source.cost_per_unit,
                                      'unit': source.unit}
+
         self.n_sources = len(self.sources)
+
+        return
 
     def add_consumer(self, consumer):
         """
@@ -94,6 +98,8 @@ class EnergyDistribution:
 
         self.consumers[consumer.name] = {'demand': consumer.demand}
         self.n_consumers = len(self.consumers)
+
+        return
 
     def demand_constraint(self, x):
         constraints = []
@@ -121,8 +127,9 @@ class EnergyDistribution:
         if B_demand != self.consumers['B']['demand']:
             raise ValueError(f"B customer demand is not met ({B_demand}!={self.consumers['B']['demand']})")
 
-        S_max = self.sources['Solar']['Capacity']
-        W_max = self.sources['Wind']['Capacity']
+        S_max = self.sources['Solar']['capacity']
+        W_max = self.sources['Wind']['capacity']
+
         if solar_demand > S_max:
             warnings.warn(
                 f'Total solar demand ({solar_demand}) is higher than capacity ({S_max}).')
@@ -142,6 +149,32 @@ class EnergyDistribution:
 
         return self.sources['Solar']['cost_per_unit'] * solar_demand + \
             self.sources['Wind']['cost_per_unit'] * wind_demand
+
+
+    def generate_one_solution(self):
+        S_max = self.sources['Solar']['capacity']
+        W_max = self.sources['Wind']['capacity']
+        D_A = self.consumers['A']['demand']
+        D_B = self.consumers['B']['demand']
+
+        a = np.random.uniform(0, D_A)
+        b = D_A - a
+
+        # Possible range for c based on a + c < S_max
+        max_c = S_max - a
+
+        # Random float for c such that a + c < S_max and c < max_c
+        c = np.random.uniform(0, min(max_c, S_max))
+        d = D_B - c
+
+        solution = np.array([[a, b], [c, d]])
+
+        # Check column 1 constraint (b + d < W_max)
+        if b + d < W_max:
+            return solution
+        else:
+            # Recursively call the function
+            return self.generate_one_solution()
 
 
 def calculate_local_demand(solution):
