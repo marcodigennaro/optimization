@@ -16,6 +16,9 @@ git clone git@github.com:marcodigennaro/optimization.git
 # Enter the folder
 cd optimization/
 
+# Set your operating system (MacOS vs Linux)
+python python set_python_version.py
+
 # Create the python environment from the pyproject.toml file
 poetry install
 
@@ -43,17 +46,12 @@ Both are compared to the real solution in terms of precision, memory and time re
 ### Author
 
 Marco Di Gennaro 
-- [My GitHub](https://github.com/marcodigennaro)
-- [My Linkedin](https://www.linkedin.com/in/marcodig/)
-- [My professional website](https://atomistic-modelling.com/)
+- [CV](https://github.com/marcodigennaro/CV/blob/main/MDG_CV.pdf)
+- [GitHub](https://github.com/marcodigennaro)
+- [Linkedin](https://www.linkedin.com/in/marcodig/)
+- [professional website](https://atomistic-modelling.com/)
 
 ### License
 
 This project is licensed under the GPL v3 License - see the [LICENSE.md](https://github.com/marcodigennaro/WindML/blob/main/LICENSE.md) file for details
-
- 
-### Acknowledgements
-
-
-
 
