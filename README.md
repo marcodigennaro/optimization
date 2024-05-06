@@ -38,6 +38,7 @@ Both are compared to the real solution in terms of precision, memory and time re
 3. `power_loss` Determine the optimal wire diameter so that the power losses due to resistance is minimised while ensuring that the cable can carry a specified maximum current without overheating
 4. `renewable_energy_flow` We need to optimize the distribution of energy from multiple sources to different consumers to minimize the overall cost, while satisfying demand constraints.
 
+![Distribution of solutions for wind/solar production](https://github.com/marcodigennaro/optimization/blob/main/optimization/images/renewables.jpeg)
 
 ### Author
 
